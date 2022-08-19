@@ -9,6 +9,75 @@ It is basically an inverted version of cxx's
 using C++ for the entry point and a MultiBuf class, while 
 implementing a simple blobstore-library in Rust.
 
+## How it works
+
+In [lib.rs](src/lib.rs) we add bridge declarations for our Rust types:
+
+```rust
+#[cxx::bridge(namespace = "org::blobstore")]
+mod ffi {
+    // Rust types and signatures exposed to C++.
+    extern "Rust" {
+        type BlobstoreClient;
+        fn new_blobstore_client() -> Box<BlobstoreClient>;
+        fn put(&mut self, parts: Pin<&mut MultiBuf>) -> u64;
+        ...
+    }
+}
+
+fn new_blobstore_client() -> Box<BlobstoreClient> {
+    Box::new(BlobstoreClient { blobs: HashMap::new() })
+}
+
+struct BlobstoreClient {
+    blobs: HashMap<u64, Blob>,
+}
+
+impl BlobstoreClient {
+    fn put(&mut self, mut parts: Pin<&mut MultiBuf>) -> u64 {
+        ...
+    }
+}
+```
+
+In [build.rs](build.rs) we add logic to generate C++ bridging code from the declarations:
+
+```rust
+fn main() {
+    cxx_build::bridge("src/lib.rs");
+    println!("cargo:rerun-if-changed=src/lib.rs");
+}
+```
+
+In [CMakeLists.txt](CMakeLists.txt) we add a custom command to trigger the Rust build:
+
+```cmake
+add_custom_command(
+        OUTPUT ${BLOBSTORE_BRIDGE_CPP} ${BLOBSTORE_LIB}
+        COMMAND cargo build --manifest-path ${BLOBSTORE_CARGO_MANIFEST}
+        ...
+)
+```
+
+In [main.cpp](src/main.cpp) we include the generated C++ header, construct Rust types,
+and call their methods:
+
+```c++
+#include "lib.rs.h"
+
+int main() {
+    auto client = org::blobstore::new_blobstore_client();
+    ...
+    const auto blobid = client->put(buf);
+}
+```
+
+The application also consumes C++ types from Rust (`MultiBuf`), and leverages shared types between the two 
+languages (`BlobMetadata`).
+
+To learn more about the bridging layer, check out 
+[cxx's documentation](https://cxx.rs/).
+
 ## Building and running the code
 
 ```shell
@@ -23,5 +92,5 @@ implementing a simple blobstore-library in Rust.
 * As opposed to the original 
   [cxx demo](https://github.com/dtolnay/cxx/tree/master/demo),
   `build.rs` only generates the C++ bridging code, without
-  compiling it. Instead we pass it in to the CMake build
+  compiling it. Instead, we pass it in to the CMake build
   by referencing it in `add_executable()`.
