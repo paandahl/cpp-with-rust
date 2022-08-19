@@ -94,3 +94,7 @@ To learn more about the bridging layer, check out
   `build.rs` only generates the C++ bridging code, without
   compiling it. Instead, we pass it in to the CMake build
   by referencing it in `add_executable()`.
+
+## License
+
+The code is available under the [MIT license](https://opensource.org/licenses/MIT).
