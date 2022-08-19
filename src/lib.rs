@@ -54,7 +54,7 @@ impl BlobstoreClient {
         let mut hasher = DefaultHasher::new();
         contents.hash(&mut hasher);
         let hash = hasher.finish();
-        self.blobs.insert(hash, Blob { data: Vec::new(), tags: HashSet::new() });
+        self.blobs.insert(hash, Blob { data: contents, tags: HashSet::new() });
         hash
     }
 
