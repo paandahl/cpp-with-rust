@@ -8,7 +8,5 @@ namespace org::blobstore {
 
         bool has_more_chunks() const;
         std::vector<uint8_t>& next_chunk();
-        const std::vector<uint8_t>& get_chunk(uint64_t pos) const;
-
     };
 }
