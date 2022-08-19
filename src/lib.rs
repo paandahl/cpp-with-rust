@@ -2,6 +2,7 @@ use std::collections::{HashMap, HashSet};
 use std::collections::hash_map::DefaultHasher;
 use std::hash::{Hash, Hasher};
 use std::pin::Pin;
+use ffi::*;
 
 #[cxx::bridge(namespace = "org::blobstore")]
 mod ffi {
@@ -29,8 +30,6 @@ mod ffi {
         fn next_chunk(self: Pin<&mut MultiBuf>) -> Pin<&mut CxxVector<u8>>;
     }
 }
-
-use ffi::*;
 
 fn new_blobstore_client() -> Box<BlobstoreClient> {
     Box::new(BlobstoreClient { blobs: HashMap::new() })
