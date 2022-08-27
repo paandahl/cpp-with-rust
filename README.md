@@ -94,6 +94,10 @@ To learn more about the bridging layer, check out
   `build.rs` only generates the C++ bridging code, without
   compiling it. Instead, we pass it in to the CMake build
   by referencing it in `add_executable()`.
+* For simplicity, this example always builds the Rust 
+  code in debug mode. 
+  [See here](https://github.com/paandahl/cpp-with-rust/compare/main...cargo-release-builds) 
+  for suggested changes to adhere to the specified `CMAKE_BUILD_TYPE`.
 
 ## License
 
