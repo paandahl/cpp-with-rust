@@ -6,6 +6,10 @@ edition = "2021"
 [lib]
 crate-type = ["staticlib"]
 
+[profile.release-with-debug]
+inherits = "release"
+debug = true
+
 [dependencies]
 cxx = "1.0"
 
