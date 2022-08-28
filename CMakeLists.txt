@@ -6,7 +6,7 @@ set(CMAKE_CXX_STANDARD 17)
 set(BLOBSTORE_CARGO_MANIFEST ${CMAKE_SOURCE_DIR}/Cargo.toml)
 set(BLOBSTORE_SOURCE_FILE ${CMAKE_SOURCE_DIR}/src/lib.rs)
 set(BLOBSTORE_BRIDGE_CPP ${CMAKE_SOURCE_DIR}/target/cxxbridge/blobstore/src/lib.rs.cc)
-set(BLOBSTORE_LIB ${CMAKE_SOURCE_DIR}/target/debug/libblobstore${CMAKE_STATIC_LIBRARY_SUFFIX})
+set(BLOBSTORE_LIB ${CMAKE_SOURCE_DIR}/target/debug/${CMAKE_STATIC_LIBRARY_PREFIX}blobstore${CMAKE_STATIC_LIBRARY_SUFFIX})
 
 # Add a custom command that builds the rust crate and generates C++ bridge code
 add_custom_command(
