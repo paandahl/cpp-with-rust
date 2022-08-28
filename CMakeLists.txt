@@ -4,7 +4,7 @@ project(cpp_with_rust)
 set(CMAKE_CXX_STANDARD 17)
 
 set(CARGO_MANIFEST ${CMAKE_SOURCE_DIR}/Cargo.toml)
-set(CARGO_TARGET_DIR ${CMAKE_SOURCE_DIR}/target)
+set(CARGO_TARGET_DIR ${CMAKE_BINARY_DIR}/target)
 
 if(CMAKE_BUILD_TYPE STREQUAL Debug)
     set(CARGO_PROFILE dev)
@@ -24,7 +24,7 @@ set(BLOBSTORE_LIB ${CARGO_BUILD_FOLDER}/${CMAKE_STATIC_LIBRARY_PREFIX}blobstore$
 # Add a custom command that builds the rust crate and generates C++ bridge code
 add_custom_command(
         OUTPUT ${BLOBSTORE_BRIDGE_CPP} ${BLOBSTORE_LIB}
-        COMMAND cargo build --profile ${CARGO_PROFILE} --manifest-path ${CARGO_MANIFEST}
+        COMMAND CARGO_TARGET_DIR=${CARGO_TARGET_DIR} cargo build --profile ${CARGO_PROFILE} --manifest-path ${CARGO_MANIFEST}
         DEPENDS ${BLOBSTORE_SOURCE_FILE}
         USES_TERMINAL
 )
