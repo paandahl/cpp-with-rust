@@ -81,11 +81,17 @@ To learn more about the bridging layer, check out
 ## Building and running the code
 
 ```shell
-  mkdir build && cd build
+  git clone git@github.com:paandahl/cpp-with-rust.git
+  mkdir cpp-with-rust/build
+  cd cpp-with-rust/build
+
   cmake ..
   cmake --build .
   ./cpp_with_rust
 ```
+
+> **_NOTE:_** If you are using Windows, run these commands in the 
+> *Developer PowerShell for VS*.
 
 ## Technical notes
 

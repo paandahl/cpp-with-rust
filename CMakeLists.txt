@@ -28,3 +28,15 @@ target_include_directories(
 )
 
 target_link_libraries(cpp_with_rust ${BLOBSTORE_LIB})
+
+# Windows-only configuration
+if(WIN32)
+    target_link_libraries(cpp_with_rust userenv ws2_32 bcrypt)
+    set_target_properties(
+            cpp_with_rust
+            PROPERTIES
+            MSVC_RUNTIME_LIBRARY "MultiThreadedDLL"
+            RUNTIME_OUTPUT_DIRECTORY_DEBUG ${CMAKE_BINARY_DIR}
+            RUNTIME_OUTPUT_DIRECTORY_RELEASE ${CMAKE_BINARY_DIR}
+    )
+endif()
