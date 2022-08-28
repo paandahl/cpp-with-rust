@@ -83,7 +83,7 @@ To learn more about the bridging layer, check out
 ```shell
   mkdir build && cd build
   cmake ..
-  make
+  cmake --build .
   ./cpp_with_rust
 ```
 
