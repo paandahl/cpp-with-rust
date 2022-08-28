@@ -1,5 +1,7 @@
 #pragma once
 #include <vector>
+#include <cstdint>
+#include <cstddef>
 
 namespace org::blobstore {
     struct MultiBuf {
