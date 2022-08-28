@@ -97,7 +97,8 @@ To learn more about the bridging layer, check out
 * For simplicity, this example always builds the Rust 
   code in debug mode. 
   [See here](https://github.com/paandahl/cpp-with-rust/compare/main...cargo-release-builds) 
-  for suggested changes to adhere to the specified `CMAKE_BUILD_TYPE`.
+  for suggested changes to adhere to the specified `CMAKE_BUILD_TYPE`, and 
+  moving the cargo output to within the CMake build tree.
 
 ## License
 
