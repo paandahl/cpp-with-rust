@@ -29,6 +29,11 @@ target_include_directories(
 
 target_link_libraries(cpp_with_rust ${BLOBSTORE_LIB})
 
+set_target_properties(
+    cpp_with_rust
+    PROPERTIES ADDITIONAL_CLEAN_FILES ${CARGO_TARGET_DIR}
+)
+
 # Windows-only configuration
 if(WIN32)
     target_link_libraries(cpp_with_rust userenv ws2_32 bcrypt)
