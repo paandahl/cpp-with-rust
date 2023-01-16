@@ -16,6 +16,7 @@ add_custom_command(
         COMMAND cargo build --manifest-path ${CARGO_MANIFEST}
         DEPENDS ${BLOBSTORE_SOURCE_FILE}
         USES_TERMINAL
+        COMMENT "Running cargo..."
 )
 
 add_executable(cpp_with_rust src/main.cpp src/multibuf.cpp ${BLOBSTORE_BRIDGE_CPP})
@@ -28,6 +29,11 @@ target_include_directories(
 )
 
 target_link_libraries(cpp_with_rust ${BLOBSTORE_LIB})
+
+set_target_properties(
+        cpp_with_rust
+        PROPERTIES ADDITIONAL_CLEAN_FILES ${CARGO_TARGET_DIR}
+)
 
 # Windows-only configuration
 if(WIN32)
